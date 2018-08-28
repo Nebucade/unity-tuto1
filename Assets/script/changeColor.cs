@@ -5,30 +5,33 @@ using UnityEngine;
 public class changeColor : MonoBehaviour {
 
 
-    private GameObject cube;
+    private GameObject[] cubes;
     private double color;
 	// Use this for initialization
 	void Start () {
         Debug.Log("Init ChangeColor");
-        cube = GameObject.Find("Cube");
+        cubes = GameObject.FindGameObjectsWithTag("cube");
         color = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        color = color + 1 * Time.deltaTime;
+        color = color + 10 * Time.deltaTime;
         if (color > 360)
         { color = 0; }
 
         int r, g, b;
         HsvToRgb(color, 1, 1, out r, out g, out b);
 
-        Color m = new Color(r, g, b, 1);
+        Color m = new Color(((float)r)/255, ((float)g) / 255, ((float)b) / 255, 1);
 
 
-        Debug.Log("color : " + color + " - " + m.r + "," + m.g + "," + m.b);
-        cube.GetComponent<Renderer>().material.color = m;
+        //Debug.Log("color : " + color + " - " + m.r + "," + m.g + "," + m.b);
+        foreach (GameObject o in cubes)
+        {
+            o.GetComponent<Renderer>().material.color = m;
+        }
 
     }
 
